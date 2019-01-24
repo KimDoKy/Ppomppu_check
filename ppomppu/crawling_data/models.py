@@ -5,7 +5,7 @@ class CrawlingData(models.Model):
     category = models.CharField(max_length=10)
     write_date = models.CharField(max_length=10)
     detail_link = models.URLField()
-    prod_image = models.ImageField(blank=True, null=True)
+    prod_image = models.URLField(blank=True, null=True)
     crawling_data = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
