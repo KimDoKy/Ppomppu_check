@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from django.http import HttpResponse
+from .utils.crawling import craw_item
+from .utils.save_db import save_db
 
-# Create your views here.
+detaile_url = 'http://www.ppomppu.co.kr/zboard/view.php?id='
+
+def run_crawling(request):
+    url = 'http://www.ppomppu.co.kr/zboard/zboard.php?id=ppomppu&page=1'
+    contents = craw_item(url)
+    save_db(contents)
+    return HttpResponse("complate")
