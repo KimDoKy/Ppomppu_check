@@ -18,3 +18,17 @@ class ModelTestCase(TestCase):
         self.test_instance.save()
         new_count = CD.objects.count()
         self.assertNotEqual(old_count, new_count)
+
+from .views import run_crawling
+
+class CrawlingTestCase(TestCase):
+    
+    def setUp(self):
+        pass
+
+    def test_crawling_save_db(self):
+        old_count = CD.objects.count()
+        url = 'http://www.ppomppu.co.kr/zboard/zboard.php?id=ppomppu&page=1'
+        run_crawling(url)
+        new_count = CD.objects.count()
+        self.assertNotEqual(old_count, new_count)
