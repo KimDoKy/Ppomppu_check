@@ -7,6 +7,7 @@ class CrawlingData(models.Model):
     detail_link = models.URLField()
     prod_image = models.URLField(blank=True, null=True)
     crawling_data = models.DateTimeField(auto_now_add=True)
+    status = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.title}'
