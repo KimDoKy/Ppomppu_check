@@ -1,9 +1,11 @@
 import requests
 from bs4 import BeautifulSoup as bs
+import re
 
 def craw_item(url):
     html = requests.get(url)
     contents = {}
+    p = re.compile('^[a-z0-9./_]+')
     try:
         if html.status_code == 200:
             html = html.text
@@ -17,7 +19,8 @@ def craw_item(url):
                 link = items[index].find('td',{'valign':'middle'})
                 detail_url = link.find('a')['href'][12:]
                 detail_link = 'http://www.ppomppu.co.kr/zboard/view.php?id=' + detail_url
-                image = items[index].find('img')['src'][2:]
+                image_url = p.match(items[index].find('img')['src'][2:])
+                image = image_url.group()
                 contents['content_' + str(index)] = {'title':title,
                                                   'category':category,
                                                   'write_date':write_date,
