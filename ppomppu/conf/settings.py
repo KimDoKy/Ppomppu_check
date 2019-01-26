@@ -40,7 +40,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'django.contrib.sites',
+    'allauth', 
+    'allauth.account',
+    'rest_auth.registration',
     'crawling_data',
+    'users',
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +62,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'conf.urls'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
 
 TEMPLATES = [
     {
@@ -103,6 +117,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'users.CustomUser'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+SITE_ID = 1
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
