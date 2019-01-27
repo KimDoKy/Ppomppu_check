@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('run/', include('crawling_data.urls')),
     path('api/', include('api.urls')),
+    path('keywords/', include('keywords.urls')),
 ]
