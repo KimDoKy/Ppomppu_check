@@ -5,5 +5,4 @@ class KeywordSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Keywords
-        fields = ('__all__')
-# fields = ('keyword', 'alarm', 'update_link')
+        fields = ('keyword','alarm','update_link')
