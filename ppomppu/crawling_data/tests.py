@@ -1,5 +1,7 @@
 from django.test import TestCase
 from .models import CrawlingData as CD
+# from .util import send_mail
+from django.core import mail
 
 class ModelTestCase(TestCase):
 
@@ -32,3 +34,17 @@ class CrawlingTestCase(TestCase):
         run_crawling(url)
         new_count = CD.objects.count()
         self.assertNotEqual(old_count, new_count)
+
+class SendMailTestCase(TestCase):
+
+    def setUp(self):
+        self.subject = 'test mail'
+        self.message = 'test mail content'
+        self.from_mail = 'makingfunk0@gmail.com'
+        self.to_mail = 'neverlandpan@hanmail.net'
+
+    def test_send_mail(self):
+        mail.send_mail(self.subject, self.message, self.from_mail, [self.to_mail,], fail_silently=False)
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].subject, self.subject)
+
