@@ -165,3 +165,7 @@ EMAIL_HOST_PASSWORD = CONF_FILES['email']['password']
 EMAIL_PORT = CONF_FILES['email']['port']
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# Celery Settings
+CELERY_BROKER_URL = 'redis://localhost'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
