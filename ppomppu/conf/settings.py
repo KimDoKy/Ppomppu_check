@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 import json
+from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     'crawling_data',
     'users',
     'keywords',
+    'django_celery_beat',
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -167,5 +169,14 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Celery Settings
-CELERY_BROKER_URL = 'redis://localhost'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_BROKER_URL = 'redis://localhost:6379'
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_TIMEZOME = 'Asia/Seoul'
+CELERY_ENABLE_UTC = False
+CELERY_BEAT_SCHEDULE = {
+    'task-every-seconds': {
+        'task': 'conf.tasks.add',
+        'schedule': timedelta(seconds=1),
+        'args': (1,2)
+    },
+}
