@@ -15,9 +15,17 @@ class CrawlingData(models.Model):
         return f'{self.title}'
 
 from .utils.send_mail import send_mails
+from keywords.models import Keywords
+import re
 
 @receiver(post_save, sender=CrawlingData)
-def updata_signal(sender, instance, **kwargs):
-    print('---signal-----')
-    print(instance)
-# send_mails('abmu333@hanmail.net')
+def update_signal(sender, instance, **kwargs):
+    if instance.status == True:
+        print('---signal-----')
+        keywords = Keywords.objects.filter(alarm=True)
+        for key in keywords:
+            keyword = key.keyword
+            if re.search(keyword, instance.title):
+                send_mails(str(key.owner), keyword, instance.detail_link)
+    else:
+        pass
