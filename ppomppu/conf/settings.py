@@ -176,7 +176,7 @@ CELERY_ENABLE_UTC = False
 CELERY_BEAT_SCHEDULE = {
     'task-crawling': {
         'task': 'crawling_data.tasks.crawling',
-        'schedule': timedelta(seconds=600),
+        'schedule': timedelta(seconds=300),
         'args': ()
     },
 }
