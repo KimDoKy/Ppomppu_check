@@ -18,6 +18,15 @@ def matching_keyword(update_key, keywords):
         if re.search(key.keyword, update_key.title):
             send_mails(key, update_key)
 
+def multi_proc(keywords, update_data):
+    procs = []
+    for update_key in update_data:
+        proc = Process(target=matching_keyword, args=(update_key, keywords))
+        procs.append(proc)
+        proc.start()
+    for proc in procs:
+        proc.join()
+
 @task
 def crawling():
     url = 'http://www.ppomppu.co.kr/zboard/zboard.php?id=ppomppu&page=1'
@@ -27,10 +36,4 @@ def crawling():
     # update_data는 redis를 통해 부하를 줄일 수 있을 것 같다.
     # 릭팩토링 예정
     update_data = CrawlingData.objects.filter(status=True)
-    procs = []
-    for update_key in update_data:
-        proc = Process(target=matching_keyword, args=(update_key, keywords))
-        procs.append(proc)
-        proc.start()
-    for proc in procs:
-        proc.join()
+    multi_proc(keywords, update_data)
