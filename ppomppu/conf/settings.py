@@ -171,12 +171,13 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # Celery Settings
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_RESULT_ENGINE_OPTIONS = {'echo':True}
 CELERY_TIMEZOME = 'Asia/Seoul'
 CELERY_ENABLE_UTC = False
 CELERY_BEAT_SCHEDULE = {
     'task-crawling': {
         'task': 'crawling_data.tasks.crawling',
-        'schedule': timedelta(seconds=300),
+        'schedule': timedelta(seconds=60),
         'args': ()
     },
 }
