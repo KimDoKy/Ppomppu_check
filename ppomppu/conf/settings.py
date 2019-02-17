@@ -168,10 +168,18 @@ EMAIL_PORT = CONF_FILES['email']['port']
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+# Caches settings
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/0',
+        },
+    }
+CACHE_TTL = 60 * 15
+
 # Celery Settings
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
-CELERY_RESULT_ENGINE_OPTIONS = {'echo':True}
 CELERY_TIMEZOME = 'Asia/Seoul'
 CELERY_ENABLE_UTC = False
 CELERY_BEAT_SCHEDULE = {

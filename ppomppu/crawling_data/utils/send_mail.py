@@ -5,7 +5,7 @@ from email.mime.text import MIMEText
 def send_mails(key, instance):
     address = str(key.owner)
     keyword = key.keyword
-    detail_link = instance.detail_link
+    detail_link = instance['detail_link']
     print('메일을 발송합니다.')
     id = settings.CONF_FILES['email']['id']
     pw = settings.CONF_FILES['email']['password']
