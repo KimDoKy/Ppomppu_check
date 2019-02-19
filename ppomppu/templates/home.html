@@ -1,0 +1,10 @@
+{% load socialaccount %}
+
+<h1>Django Allauth Test</h1>
+{% if user.is_authenticated %}
+<p>Welcom</p>
+{% else %}
+<a href="{% provider_login_url 'facebook' %}">FaceBook Sign Up</a>
+<a href="{% provider_login_url 'naver' %}">Naver Sign Up</a>
+<a href="{% provider_login_url 'kakao' %}">Kakao Sign Up</a>
+{% endif %}

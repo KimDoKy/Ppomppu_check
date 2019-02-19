@@ -43,10 +43,14 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
-    'django.contrib.sites',
-    'allauth', 
-    'allauth.account',
     'rest_auth.registration',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.kakao',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.naver',
+    'django.contrib.sites',
     'crawling_data',
     'users',
     'keywords',
@@ -87,7 +91,7 @@ REST_FRAMEWORK = {
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -108,8 +112,12 @@ WSGI_APPLICATION = 'conf.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': CONF_FILES['postgresql']['NAME'],
+        'USER': CONF_FILES['postgresql']['USER'],
+        'PASSWORD': CONF_FILES['postgresql']['PASSWORD'],
+        'HOST': CONF_FILES['postgresql']['HOST'],
+        'PORT': CONF_FILES['postgresql']['PORT'],
     }
 }
 
@@ -136,7 +144,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-SITE_ID = 1
+SITE_ID = 3
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -168,6 +176,15 @@ EMAIL_PORT = CONF_FILES['email']['port']
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+# Caches settings
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/0',
+        },
+    }
+CACHE_TTL = 60 * 15
+
 # Celery Settings
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
@@ -176,7 +193,7 @@ CELERY_ENABLE_UTC = False
 CELERY_BEAT_SCHEDULE = {
     'task-crawling': {
         'task': 'crawling_data.tasks.crawling',
-        'schedule': timedelta(seconds=600),
+        'schedule': timedelta(seconds=60),
         'args': ()
     },
 }
