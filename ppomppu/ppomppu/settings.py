@@ -177,23 +177,33 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Caches settings
-CACHES = {
-    'default': {
-        'BACKEND': 'redis_cache.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379/0',
-        },
-    }
+if DEBUG:
+    CACHES = {
+        'default': {
+            'BACKEND': 'redis_cache.RedisCache',
+            'LOCATION': 'redis://127.0.0.1:6379/0',
+            },
+        }
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'redis_cache.RedisCache',
+            'LOCATION': CONF_FILES['AWS']['cache'],
+            },
+        }
+
 CACHE_TTL = 60 * 15
 
 # Celery Settings
-CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_BROKER_URL = 'sqs://' + CONF_FILES['AWS']['access_key_id'] + ':' + CONF_FILES['AWS']['secret_access_key'] + '@'
+CELERY_TRANSPORT_OPTIONS = {'region':CONF_FILES['AWS']['region']}
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERY_TIMEZOME = 'Asia/Seoul'
 CELERY_ENABLE_UTC = False
 CELERY_BEAT_SCHEDULE = {
     'task-crawling': {
         'task': 'crawling_data.tasks.crawling',
-        'schedule': timedelta(seconds=60),
+        'schedule': timedelta(seconds=600),
         'args': ()
     },
 }
