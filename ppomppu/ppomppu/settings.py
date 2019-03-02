@@ -28,8 +28,9 @@ SECRET_KEY = CONF_FILES['django']['secret_key']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [CONF_FILES['django']['allowed_host_1'],
+                 CONF_FILES['django']['allowed_host_2'],
+]
 
 # Application definition
 
@@ -144,7 +145,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-SITE_ID = 3
+SITE_ID = 4
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -164,6 +165,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+
+STATICFILES_DIRS = [
+        STATIC_DIR,
+        ]
 
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

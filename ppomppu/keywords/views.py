@@ -13,3 +13,11 @@ class KeywordListView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class KeywordUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Keywords.objects.all()
+    serializer_class = KeywordSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    lookup_fields = ('keyword')
+
