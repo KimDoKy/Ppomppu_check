@@ -1,6 +1,14 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView
+from .models import CustomUser
+from .serializers import UserSerializer
+from rest_framework import generics
 
 
-class Home(TemplateView):
-    template_name = 'home.html'
+class UserInfo(generics.RetrieveAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
+
+    def get_object(self):
+        return self.request.user
+
+
+
