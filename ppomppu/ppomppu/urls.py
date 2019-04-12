@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from users.views import KakaoLogin
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,5 +24,5 @@ urlpatterns = [
     path('keywords/', include('keywords.urls')),
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
-    path('social-auth/', include('allauth.urls')),
+    path('rest-auth/kakao/', KakaoLogin.as_view(), name='kk_login'),
 ]
