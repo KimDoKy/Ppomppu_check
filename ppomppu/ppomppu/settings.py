@@ -118,16 +118,25 @@ WSGI_APPLICATION = 'ppomppu.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': CONF_FILES['postgresql']['NAME'],
-        'USER': CONF_FILES['postgresql']['USER'],
-        'PASSWORD': CONF_FILES['postgresql']['PASSWORD'],
-        'HOST': CONF_FILES['postgresql']['HOST'],
-        'PORT': CONF_FILES['postgresql']['PORT'],
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+    ALLOWED_HOSTS = ['localhost']
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': CONF_FILES['postgresql']['NAME'],
+            'USER': CONF_FILES['postgresql']['USER'],
+            'PASSWORD': CONF_FILES['postgresql']['PASSWORD'],
+            'HOST': CONF_FILES['postgresql']['HOST'],
+            'PORT': CONF_FILES['postgresql']['PORT'],
+        }
+    }
 
 
 # Password validation
