@@ -5,7 +5,7 @@ from keywords.models import Keywords
 class KeywordSerializer(serializers.ModelSerializer):
     class Meta:
         model = Keywords
-        fields = ('keyword', 'alarm', 'owner')
+        fields = ('keyword', 'alarm', 'owner', 'id')
 
 class UserSerializer(serializers.ModelSerializer):
     keywords = KeywordSerializer(many=True, read_only=True)
