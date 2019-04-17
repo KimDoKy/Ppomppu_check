@@ -2,9 +2,9 @@ from rest_framework import generics
 from rest_framework import permissions
 from .models import Keywords
 from .serializers import KeywordSerializer
+from .permissions import IsOwner
 
-
-class KeywordListView(generics.ListCreateAPIView):
+class KeywordCreateView(generics.CreateAPIView):
     queryset = Keywords.objects.all()
     serializer_class = KeywordSerializer 
     permission_classes = (permissions.IsAuthenticated,)
@@ -16,5 +16,5 @@ class KeywordListView(generics.ListCreateAPIView):
 class KeywordUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Keywords.objects.all()
     serializer_class = KeywordSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated, IsOwner)
     lookup_fields = ('keyword')
