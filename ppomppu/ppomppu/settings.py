@@ -28,10 +28,6 @@ SECRET_KEY = CONF_FILES['django']['secret_key']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [CONF_FILES['django']['allowed_host_1'],
-                 CONF_FILES['django']['allowed_host_2'],
-]
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -125,7 +121,7 @@ if DEBUG:
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
-    ALLOWED_HOSTS = ['localhost']
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'localhost:8080']
 else:
     DATABASES = {
         'default': {
@@ -161,7 +157,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-SITE_ID = 5
+SITE_ID = 6 
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -230,3 +226,4 @@ CELERY_BEAT_SCHEDULE = {
         'args': ()
     },
 }
+
