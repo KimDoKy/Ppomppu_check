@@ -9,9 +9,10 @@ def send_mails(key, instance):
     print('메일을 발송합니다.')
     id = settings.CONF_FILES['email']['id']
     pw = settings.CONF_FILES['email']['password']
-    msg = '등록하신 키워드 ' + keyword + ' 게시물이 새로 등록되었습니다. <br/>' + detail_link
-    msg = MIMEText(msg)
-    msg['Subject'] = keyword + ' 새로운 게시물이 등록되었습니다.' 
+    subject = '[뽐뿌 Checker] ' + keyword + '의 새로운 게시물이 등록되었습니다.'
+    body = '등록하신 키워드 ' + keyword + ' 게시물이 새로 등록되었습니다. <br/>' + detail_link
+    msg = MIMEText(body, 'html')
+    msg['Subject'] = subject 
     msg['To'] = address
     msg['From'] = "뽐뿌 게시판"
     s = smtplib.SMTP_SSL('smtp.gmail.com', 465)
