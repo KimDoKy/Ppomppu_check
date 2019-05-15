@@ -42,7 +42,20 @@ def get_access_token(params):
     access_token = res_data['access_token']
     token_type = res_data['token_type']
     refresh_token = res_data['refresh_token']
-    return access_token
+    res_params = {
+        'access_token': access_token,
+        'refresh_token':refresh_token
+    }
+    return res_params
+
+from rest_framework.authtoken.models import Token
+
+def save_user_token(auth_key, access_params):
+    user = Token.objects.get(key=auth_key)
+    user_ob = CustomUser.objects.get(id=user.user_id)
+    user_ob.refresh_token = access_params['refresh_token']
+    user_ob.access_key = access_params['access_token']
+    user_ob.save()
 
 def get_auth_token(access_token):
     req_header = {'access_token':access_token}
@@ -55,8 +68,10 @@ def get_auth_token(access_token):
 def kakao_oauth(request):
     auth_code = request.GET["code"]
     req_params = set_kakao_params(auth_code)
-    access_token = get_access_token(req_params)
+    access_token_params = get_access_token(req_params)
+    access_token = access_token_params['access_token']
     auth_key = get_auth_token(access_token)
+    save_user_token(auth_key, access_token_params)
     refer_url = request.META['HTTP_REFERER']
     # return HttpResponseRedirect('http://localhost:8080', args=('testp',))
     # return redirect('http://localhost:8080', {'data':access_token})
