@@ -4,6 +4,7 @@ from allauth.socialaccount.providers.kakao.views import KakaoOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
 from rest_framework import generics
 
+from django.http.response import HttpResponseRedirect
 from django.http.response import HttpResponse
 
 class UserInfo(generics.RetrieveAPIView):
@@ -18,25 +19,46 @@ class KakaoLogin(SocialLoginView):
     adapter_class = KakaoOAuth2Adapter
 
 import requests 
-from django.utils.six import BytesIO
-from rest_framework.parsers import JSONParser
+from django.http import response
+from django.shortcuts import redirect
+from django.conf import settings
 
-def kakao_oauth(request):
-    url = "https://kauth.kakao.com/oauth/token"
-    code = request.GET["code"]
+def set_kakao_params(auth_code):
     grant_type = "authorization_code"
-    client_id = "9ed92fc9cf17c2073ca0554911152ad3"
+    client_id = settings.CONF_FILES['kakao']['client_id']
     redirect_uri = "http://localhost:8000/users/res/"
     params = {
-        'code':code,
+        'code':auth_code,
         'grant_type':grant_type,
         'client_id':client_id,
         'grant_type':grant_type
         }
-    response = requests.get(url, params=params)
+    return params
+
+def get_access_token(params):
+    url = "https://kauth.kakao.com/oauth/token"
+    response = requests.post(url, params=params)
     res_data = response.json()
     access_token = res_data['access_token']
     token_type = res_data['token_type']
     refresh_token = res_data['refresh_token']
+    return access_token
 
-    return HttpResponse(response, status=200)
+def get_auth_token(access_token):
+    req_header = {'access_token':access_token}
+    req_url = "http://localhost:8000/rest-auth/kakao/"
+    response = requests.post(req_url, req_header)
+    response_dict = response.json()
+    auth_key = response_dict['key']
+    return auth_key
+
+def kakao_oauth(request):
+    auth_code = request.GET["code"]
+    req_params = set_kakao_params(auth_code)
+    access_token = get_access_token(req_params)
+    auth_key = get_auth_token(access_token)
+    refer_url = request.META['HTTP_REFERER']
+    # return HttpResponseRedirect('http://localhost:8080', args=('testp',))
+    # return redirect('http://localhost:8080', {'data':access_token})
+    return HttpResponseRedirect(refer_url, auth_key)
+    

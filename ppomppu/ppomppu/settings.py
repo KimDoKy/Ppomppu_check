@@ -157,7 +157,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-SITE_ID = 6 
+SITE_ID = 7 
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
