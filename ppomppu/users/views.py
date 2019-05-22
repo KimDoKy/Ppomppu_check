@@ -5,7 +5,6 @@ from rest_auth.registration.views import SocialLoginView
 from rest_framework import generics
 
 from django.http.response import HttpResponseRedirect
-from django.http.response import HttpResponse
 
 class UserInfo(generics.RetrieveAPIView):
     queryset = CustomUser.objects.all()
@@ -19,8 +18,6 @@ class KakaoLogin(SocialLoginView):
     adapter_class = KakaoOAuth2Adapter
 
 import requests 
-from django.http import response
-from django.shortcuts import redirect
 from django.conf import settings
 
 def set_kakao_params(auth_code):
@@ -51,7 +48,7 @@ def get_access_token(params):
 from rest_framework.authtoken.models import Token
 
 def save_user_token(auth_key, access_params):
-    user = Token.objects.get(key=auth_key)
+    user = Token.objects.get(key=auth_key['key'])
     user_ob = CustomUser.objects.get(id=user.user_id)
     user_ob.refresh_token = access_params['refresh_token']
     user_ob.access_key = access_params['access_token']
@@ -62,8 +59,7 @@ def get_auth_token(access_token):
     req_url = "http://localhost:8000/rest-auth/kakao/"
     response = requests.post(req_url, req_header)
     response_dict = response.json()
-    auth_key = response_dict['key']
-    return auth_key
+    return response_dict
 
 def kakao_oauth(request):
     auth_code = request.GET["code"]
@@ -72,8 +68,9 @@ def kakao_oauth(request):
     access_token = access_token_params['access_token']
     auth_key = get_auth_token(access_token)
     save_user_token(auth_key, access_token_params)
-    refer_url = request.META['HTTP_REFERER']
-    # return HttpResponseRedirect('http://localhost:8080', args=('testp',))
-    # return redirect('http://localhost:8080', {'data':access_token})
-    return HttpResponseRedirect(refer_url, auth_key)
-    
+    print('meta----------------')
+    # refer_url = request.META['HTTP_REFERER']
+    refer_url = 'http://localhost:8080/'
+    response = HttpResponseRedirect(refer_url, auth_key)
+    response.set_cookie('token', auth_key['key'])
+    return response
