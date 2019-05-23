@@ -3,5 +3,5 @@ from .views import UserInfo, kakao_oauth
 
 urlpatterns = [
     path('info/', UserInfo.as_view()),
-    path('res/', kakao_oauth)
+    path('oauth/', kakao_oauth)
 ]

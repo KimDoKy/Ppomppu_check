@@ -1,9 +1,10 @@
 from .models import CustomUser
 from .serializers import UserSerializer
+from django.conf import settings
 from allauth.socialaccount.providers.kakao.views import KakaoOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
 from rest_framework import generics
-
+import requests
 from django.http.response import HttpResponseRedirect
 
 class UserInfo(generics.RetrieveAPIView):
@@ -16,9 +17,6 @@ class UserInfo(generics.RetrieveAPIView):
 
 class KakaoLogin(SocialLoginView):
     adapter_class = KakaoOAuth2Adapter
-
-import requests 
-from django.conf import settings
 
 def set_kakao_params(auth_code):
     grant_type = "authorization_code"
@@ -56,7 +54,7 @@ def save_user_token(auth_key, access_params):
 
 def get_auth_token(access_token):
     req_header = {'access_token':access_token}
-    req_url = "http://localhost:8000/rest-auth/kakao/"
+    req_url = "https://api.pycon.shop/rest-auth/kakao/"
     response = requests.post(req_url, req_header)
     response_dict = response.json()
     return response_dict
@@ -70,7 +68,7 @@ def kakao_oauth(request):
     save_user_token(auth_key, access_token_params)
     print('meta----------------')
     # refer_url = request.META['HTTP_REFERER']
-    refer_url = 'http://localhost:8080/'
+    refer_url = 'https://app.pycon.shop/oauth'
     response = HttpResponseRedirect(refer_url, auth_key)
     response.set_cookie('token', auth_key['key'])
     return response
