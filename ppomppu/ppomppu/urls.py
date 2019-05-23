@@ -24,5 +24,5 @@ urlpatterns = [
     path('keywords/', include('keywords.urls')),
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
-    path('rest-auth/kakao/', KakaoLogin.as_view(), name='kk_login'),
+    path('rest-auth/kakao/', KakaoLogin.as_view(), name='socialaccount_signup'),
 ]
