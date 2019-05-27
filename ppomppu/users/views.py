@@ -5,7 +5,7 @@ from allauth.socialaccount.providers.kakao.views import KakaoOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
 from rest_framework import generics
 import requests
-from django.http.response import HttpResponseRedirect
+from django.http.response import HttpResponseRedirect, HttpResponse
 
 class UserInfo(generics.RetrieveAPIView):
     queryset = CustomUser.objects.all()
@@ -21,7 +21,7 @@ class KakaoLogin(SocialLoginView):
 def set_kakao_params(auth_code):
     grant_type = "authorization_code"
     client_id = settings.CONF_FILES['kakao']['client_id']
-    redirect_uri = "http://localhost:8000/users/res/"
+    redirect_uri = "https://api.pycon.shop/user/res/"
     params = {
         'code':auth_code,
         'grant_type':grant_type,
@@ -53,22 +53,23 @@ def save_user_token(auth_key, access_params):
     user_ob.save()
 
 def get_auth_token(access_token):
-    req_header = {'access_token':access_token}
+    data = {'access_token':access_token}
     req_url = "https://api.pycon.shop/rest-auth/kakao/"
-    response = requests.post(req_url, req_header)
+    response = requests.post(req_url, data=data)
     response_dict = response.json()
     return response_dict
 
 def kakao_oauth(request):
-    auth_code = request.GET["code"]
-    req_params = set_kakao_params(auth_code)
-    access_token_params = get_access_token(req_params)
-    access_token = access_token_params['access_token']
-    auth_key = get_auth_token(access_token)
-    save_user_token(auth_key, access_token_params)
-    print('meta----------------')
-    # refer_url = request.META['HTTP_REFERER']
-    refer_url = 'https://app.pycon.shop/oauth'
-    response = HttpResponseRedirect(refer_url, auth_key)
-    response.set_cookie('token', auth_key['key'])
-    return response
+    try:
+        auth_code = request.GET["code"]
+        req_params = set_kakao_params(auth_code)
+        access_token_params = get_access_token(req_params)
+        access_token = access_token_params['access_token']
+        auth_key = get_auth_token(access_token)
+        save_user_token(auth_key, access_token_params)
+        refer_url = 'https://app.pycon.shop/oauth'
+        response = HttpResponseRedirect(refer_url, auth_key)
+        response.set_cookie('token', auth_key['key'])
+        return response
+    except KeyError as err:
+        return HttpResponse(err)
