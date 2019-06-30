@@ -73,3 +73,8 @@ def kakao_oauth(request):
         return response
     except KeyError as err:
         return HttpResponse(err)
+
+def empty_view(request, uidb64, token):
+    reset_url = 'http://localhost:8080/pass-reset/' + uidb64 + '/' + token
+    print(reset_url)
+    return HttpResponseRedirect(reset_url)
