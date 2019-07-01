@@ -6,6 +6,10 @@ from rest_auth.registration.views import SocialLoginView
 from rest_framework import generics
 import requests
 from django.http.response import HttpResponseRedirect, HttpResponse
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
+
 
 class UserInfo(generics.RetrieveAPIView):
     queryset = CustomUser.objects.all()
@@ -43,8 +47,6 @@ def get_access_token(params):
     }
     return res_params
 
-from rest_framework.authtoken.models import Token
-
 def save_user_token(auth_key, access_params):
     user = Token.objects.get(key=auth_key['key'])
     user_ob = CustomUser.objects.get(id=user.user_id)
@@ -76,5 +78,12 @@ def kakao_oauth(request):
 
 def empty_view(request, uidb64, token):
     reset_url = 'http://localhost:8080/pass-reset/' + uidb64 + '/' + token
-    print(reset_url)
     return HttpResponseRedirect(reset_url)
+ 
+@api_view(["POST"])
+def change_username(request):
+    qs = CustomUser.objects.get(email=request.user)
+    new_username = request.data['new_username']
+    qs.username = new_username
+    qs.save()
+    return HttpResponse('')
