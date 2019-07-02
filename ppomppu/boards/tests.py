@@ -27,8 +27,6 @@ class ViewTestCase(TestCase):
     def setUp(self):
         user = CustomUser(email="tester999@test.com")
         user.save()
-        print('user: ', user)
-        print('user id: ', user.id)
         self.client = APIClient()
         self.client.force_authenticate(user=user)
         self.post_data = {
@@ -42,3 +40,11 @@ class ViewTestCase(TestCase):
 
     def test_api_can_create_a_post(self):
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+    def test_api_can_get_a_post(self):
+        post = Post.objects.get()
+        response = self.client.get(
+                reverse('detail', kwargs={'pk':post.id}),
+                format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, post)
