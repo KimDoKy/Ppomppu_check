@@ -20,3 +20,25 @@ class ModelTestCase(TestCase):
         self.post.save()
         new_count = Post.objects.count()
         self.assertNotEqual(old_count, new_count)
+
+
+class ViewTestCase(TestCase):
+
+    def setUp(self):
+        user = CustomUser(email="tester999@test.com")
+        user.save()
+        print('user: ', user)
+        print('user id: ', user.id)
+        self.client = APIClient()
+        self.client.force_authenticate(user=user)
+        self.post_data = {
+            'title':'test title',
+            'author': user.id
+            }
+        self.response = self.client.post(
+            reverse('create'),
+            self.post_data,
+            format='json')
+
+    def test_api_can_create_a_post(self):
+        self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
