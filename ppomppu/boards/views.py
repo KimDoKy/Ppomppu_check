@@ -14,7 +14,7 @@ class CreateView(generics.ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticated, IsOwner)
 
 
-class DetailView(generics.RetrieveUpdateAPIView):
+class DetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = (permissions.IsAuthenticated, IsOwner)
