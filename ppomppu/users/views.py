@@ -1,11 +1,15 @@
 from .models import CustomUser
 from .serializers import UserSerializer
 from django.conf import settings
+from django.http.response import HttpResponseRedirect, HttpResponse
 from allauth.socialaccount.providers.kakao.views import KakaoOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
 from rest_framework import generics
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
 import requests
-from django.http.response import HttpResponseRedirect, HttpResponse
+
 
 class UserInfo(generics.RetrieveAPIView):
     queryset = CustomUser.objects.all()
@@ -43,8 +47,6 @@ def get_access_token(params):
     }
     return res_params
 
-from rest_framework.authtoken.models import Token
-
 def save_user_token(auth_key, access_params):
     user = Token.objects.get(key=auth_key['key'])
     user_ob = CustomUser.objects.get(id=user.user_id)
@@ -73,3 +75,27 @@ def kakao_oauth(request):
         return response
     except KeyError as err:
         return HttpResponse(err)
+
+def empty_view(request, uidb64, token):
+    reset_url = 'http://localhost:8080/pass-reset/' + uidb64 + '/' + token
+    return HttpResponseRedirect(reset_url)
+ 
+@api_view(["POST"])
+def change_username(request):
+    qs = CustomUser.objects.get(email=request.user)
+    new_username = request.data['new_username']
+    qs.username = new_username
+    qs.save()
+    return HttpResponse('')
+
+from django.contrib.auth.hashers import check_password
+
+@api_view(["POST"])
+def membership_withdrawal(request):
+    qs = CustomUser.objects.get(email=request.user)
+    check_pw = request.data['check_pw']
+    if check_password(check_pw, qs.password):
+        qs.delete()
+    else:
+        return HttpResponse("check password", status=400)
+    return HttpResponse("delete user")

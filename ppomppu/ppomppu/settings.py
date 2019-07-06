@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'crawling_data',
     'users',
     'keywords',
+    'boards', 
     'django_celery_beat',
 ]
 
