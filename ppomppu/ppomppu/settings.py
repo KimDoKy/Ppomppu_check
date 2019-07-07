@@ -79,7 +79,22 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_WHITELIST = (
     'localhost:8080',
+    'https://app.pycon.shop'
 )
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
 
 ROOT_URLCONF = 'ppomppu.urls'
 
@@ -122,7 +137,7 @@ if DEBUG:
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'localhost:8080']
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'localhost:8080', 'app.pycon.shop', 'api.pycon.shop']
 else:
     DATABASES = {
         'default': {
