@@ -2,6 +2,8 @@
 
 <h1>Django Allauth Test</h1>
 {% if user.is_authenticated %}
+<button><a href="{% logout %}"></button>
+
 <p>Welcom</p>
 {% else %}
 <a href="{% provider_login_url 'facebook' %}">FaceBook Sign Up</a>
