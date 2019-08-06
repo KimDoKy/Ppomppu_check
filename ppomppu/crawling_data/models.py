@@ -18,13 +18,13 @@ from .utils.send_mail import send_mails
 from keywords.models import Keywords
 import re
 
-@receiver(post_save, sender=CrawlingData)
-def update_signal(sender, instance, **kwargs):
-    if instance.status == True:
-        keywords = Keywords.objects.filter(alarm=True)
-        for key in keywords:
-            keyword = key.keyword
-            if re.search(keyword, instance.title):
-                send_mails(str(key.owner), keyword, instance.detail_link)
-    else:
-        pass
+# @receiver(post_save, sender=CrawlingData)
+# def update_signal(sender, instance, **kwargs):
+#     if instance.status == True:
+#         keywords = Keywords.objects.filter(alarm=True)
+#         for key in keywords:
+#             keyword = key.keyword
+#             if re.search(keyword, instance.title):
+#                 send_mails(str(key.owner), keyword, instance.detail_link)
+#     else:
+#         pass
