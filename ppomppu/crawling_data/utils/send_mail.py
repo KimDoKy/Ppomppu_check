@@ -7,7 +7,6 @@ def send_mails(key, instance):
     keyword = key.keyword
     detail_link = instance['detail_link']
     prod_img = instance['prod_image']
-    print('메일을 발송합니다.')
     id = settings.CONF_FILES['email']['id']
     pw = settings.CONF_FILES['email']['password']
     body = '''

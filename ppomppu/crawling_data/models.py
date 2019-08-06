@@ -25,6 +25,4 @@ import re
 #         for key in keywords:
 #             keyword = key.keyword
 #             if re.search(keyword, instance.title):
-#                 send_mails(str(key.owner), keyword, instance.detail_link)
-#     else:
-#         pass
+#                 send_mails(key, instance)
