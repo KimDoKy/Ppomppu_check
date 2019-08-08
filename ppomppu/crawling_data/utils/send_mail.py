@@ -23,7 +23,7 @@ def send_mails(key, instance):
         </center>
         '''.format(detail_link, keyword, prod_img)
     msg = MIMEText(body, 'html')
-    msg['Subject'] = '[뽐뿌 Checker] ' keyword + ' 새로운 게시물이 등록되었습니다.'
+    msg['Subject'] = '[뽐뿌 Checker] ' +  keyword + ' 새로운 게시물이 등록되었습니다.'
     msg['To'] = address
     msg['From'] = "뽐뿌 Checker"
     s = smtplib.SMTP_SSL('smtp.gmail.com', 465)
