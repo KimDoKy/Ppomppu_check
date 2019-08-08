@@ -16,10 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from users.views import Home
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('run/', include('crawling_data.urls')),
     path('keywords/', include('keywords.urls')),
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
+    path('social-auth/', include('allauth.urls')),
+    path('social-auth-test/', Home.as_view(), name='home'),
 ]
