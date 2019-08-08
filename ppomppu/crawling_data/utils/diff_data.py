@@ -1,9 +1,9 @@
 import redis
 import json
 
-def diff_data(contents):
+def diff_data(contents, host):
     # redis에서 캐시를 불러와 업데이트 한 데이터와 비교한다.
-    conn = redis.StrictRedis(host='localhost', port=6379)
+    conn = redis.StrictRedis(host=host, port=6379)
     # in 함수로 중복여부를 판단하기 위해서
     # 캐시는 비교 값인 title로 구성된 list를 만든다.
     cache_title = []
