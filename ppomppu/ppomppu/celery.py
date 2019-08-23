@@ -8,7 +8,3 @@ app = Celery('ppomppu')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
 app.autodiscover_tasks()
-
-@app.task
-def add(x, y):
-    return x + y
