@@ -4,6 +4,8 @@ from .base import *
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+WSGI_APPLICATION = 'ppomppu.wsgi.dev.application'
+
 ALLOWED_HOSTS = ['*']
 
 CORS_ORIGIN_WHITELIST = (

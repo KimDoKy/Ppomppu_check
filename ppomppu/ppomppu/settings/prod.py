@@ -3,6 +3,8 @@ from .base import *
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+WSGI_APPLICATION = 'config.wsgi.prod.application'
+
 ALLOWED_HOSTS = [
     CONF_FILES['URL']['app'],
     CONF_FILES['URL']['api']
