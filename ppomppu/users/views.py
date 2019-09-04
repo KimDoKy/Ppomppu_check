@@ -2,12 +2,13 @@ from .models import CustomUser
 from .serializers import UserSerializer
 from django.conf import settings
 from django.http.response import HttpResponseRedirect, HttpResponse
+from django.shortcuts import redirect
 from allauth.socialaccount.providers.kakao.views import KakaoOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
 from rest_framework import generics
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
+from django.contrib.auth.hashers import check_password
 import requests
 
 
@@ -88,8 +89,6 @@ def change_username(request):
     qs.save()
     return HttpResponse('')
 
-from django.contrib.auth.hashers import check_password
-
 @api_view(["POST"])
 def membership_withdrawal(request):
     qs = CustomUser.objects.get(email=request.user)
@@ -99,3 +98,7 @@ def membership_withdrawal(request):
     else:
         return HttpResponse("check password", status=400)
     return HttpResponse("delete user")
+
+# 가입 후 인증 메일에서 링크를 누르면 유저 정보 페이지로 리다이렉트 시킴
+def redirect_view(request, key):
+    return redirect('https://app.pycon.shop/UserInfo')
