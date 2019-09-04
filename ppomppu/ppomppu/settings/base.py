@@ -15,7 +15,7 @@ import json
 from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname((os.path.dirname(os.path.abspath(__file__)))))
 CONF_DIR = os.path.join(BASE_DIR, '.secret')
 CONF_FILES = json.loads(open(os.path.join(CONF_DIR, 'common.json')).read())
 
@@ -25,8 +25,6 @@ CONF_FILES = json.loads(open(os.path.join(CONF_DIR, 'common.json')).read())
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = CONF_FILES['django']['secret_key'] 
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 # Application definition
 
@@ -54,6 +52,7 @@ INSTALLED_APPS = [
     'keywords',
     'boards', 
     'django_celery_beat',
+    'redis_cache',
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -66,6 +65,11 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_LOGIN_REDIRECTS = '/rest-auth/user/'
 
+# CORS settings
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -76,10 +80,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-CORS_ORIGIN_WHITELIST = (
-    'localhost:8080',
-)
 
 ROOT_URLCONF = 'ppomppu.urls'
 
@@ -109,58 +109,6 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'ppomppu.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'localhost:8080']
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': CONF_FILES['postgresql']['NAME'],
-            'USER': CONF_FILES['postgresql']['USER'],
-            'PASSWORD': CONF_FILES['postgresql']['PASSWORD'],
-            'HOST': CONF_FILES['postgresql']['HOST'],
-            'PORT': CONF_FILES['postgresql']['PORT'],
-        }
-    }
-
-# LOG
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': './log/debug.log',
-            'formatter': 'simple',
-        },
-    },
-    'formatters': {
-        'simple': {
-            'format': '{levelname} {asctime} {message}',
-            'style': '{',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-    },
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -184,7 +132,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-SITE_ID = 7 
+SITE_ID = 4
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -222,28 +170,11 @@ EMAIL_PORT = CONF_FILES['email']['port']
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-# Caches settings
-if DEBUG:
-    CACHES = {
-        'default': {
-            'BACKEND': 'redis_cache.RedisCache',
-            'LOCATION': 'redis://127.0.0.1:6379/0',
-            },
-        }
-else:
-    CACHES = {
-        'default': {
-            'BACKEND': 'redis_cache.RedisCache',
-            'LOCATION': 'redis://' + CONF_FILES['AWS']['cache'],
-            },
-        }
-
 CACHE_TTL = 60 * 15
 
 # Celery Settings
-CELERY_BROKER_URL = 'sqs://' + CONF_FILES['AWS']['access_key_id'] + ':' + CONF_FILES['AWS']['secret_access_key'] + '@'
-CELERY_TRANSPORT_OPTIONS = {'region':CONF_FILES['AWS']['region']}
-CELERY_RESULT_BACKEND = 'redis://' + CONF_FILES['AWS']['cache']
+CELERY_TAST_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZOME = 'Asia/Seoul'
 CELERY_ENABLE_UTC = False
 CELERY_BEAT_SCHEDULE = {

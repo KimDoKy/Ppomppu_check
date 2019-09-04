@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from users.views import KakaoLogin
+from users.views import KakaoLogin, redirect_view
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +26,6 @@ urlpatterns = [
     path('boards/', include('boards.urls')),
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
+    path('rest-auth/registration/<key>/', redirect_view, name='account_confirm_email'),
     path('rest-auth/kakao/', KakaoLogin.as_view(), name='socialaccount_signup'),
 ]
