@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'keywords',
     'boards', 
     'django_celery_beat',
+    'redis_cache',
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -64,6 +65,10 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_LOGIN_REDIRECTS = '/rest-auth/user/'
 
+# CORS settings
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -127,7 +132,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-SITE_ID = 7
+SITE_ID = 4
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -175,7 +180,7 @@ CELERY_ENABLE_UTC = False
 CELERY_BEAT_SCHEDULE = {
     'task-crawling': {
         'task': 'crawling_data.tasks.crawling',
-        'schedule': timedelta(seconds=120),
+        'schedule': timedelta(seconds=600),
         'args': ()
     },
 }
