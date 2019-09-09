@@ -4,6 +4,7 @@ from keywords.models import Keywords
 
 class KeywordSerializer(serializers.ModelSerializer):
     class Meta:
+        ref_name = 'doc_keyword'
         model = Keywords
         fields = ('keyword', 'alarm', 'owner', 'id')
 

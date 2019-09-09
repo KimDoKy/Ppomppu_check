@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'boards', 
     'django_celery_beat',
     'redis_cache',
+    'drf_yasg',
 ]
 
 AUTHENTICATION_BACKENDS = (
