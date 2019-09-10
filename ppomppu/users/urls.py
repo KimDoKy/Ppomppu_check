@@ -1,6 +1,8 @@
 from django.urls import path
 from .views import UserInfo, kakao_oauth, empty_view, change_username, membership_withdrawal
 
+app_name = 'users'
+
 urlpatterns = [
     path('info/', UserInfo.as_view()),
     path('oauth/', kakao_oauth),
