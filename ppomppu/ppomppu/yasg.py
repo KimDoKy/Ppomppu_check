@@ -2,19 +2,19 @@ from django.urls import path, include
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework.permissions import AllowAny
-from . import rest_auth_url
+from .rest_auth import rest_auth_urls
 
 schema_url_v1_patterns = [
-    path('v1/users/', include('users.urls', namespace='users')),
-    path('v1/keywords/', include('keywords.urls', namespace='keywords')),
-    path('v1/rest-auth/', include(rest_auth_url, namespace='rest_auth')),
+    path('users/', include('users.urls', namespace='users')),
+    path('rest-auth/', include(rest_auth_urls, namespace='rest_auth')),
+    path('keywords/', include('keywords.urls', namespace='keywords')),
     ]
 
 schema_view_v1 = get_schema_view(
     openapi.Info(
-        title="User Info Api",
+        title="Ppomppu Backend Api",
         default_version='v1',
-        description="유저 정보 조회 API",
+        description="PpomPpu Checker Backend API Docu #[app](https://app.pycon.shop)",
         contact=openapi.Contact(email="makingfunk0@gmail.com"),
         license=openapi.License(name="Makingfunk"),
         ),
