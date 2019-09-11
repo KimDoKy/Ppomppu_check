@@ -5,7 +5,8 @@ import re
 def craw_item(url):
     html = requests.get(url)
     contents = {}
-    p = re.compile('^[a-z0-9./_]+')
+    re_img = re.compile('^[a-z0-9./_]+') # 이미지 링크를 뽑아내기 위한 정규식
+    re_src = re.compile('[^?]+$')        # 상세 링크를 뽑아내기 위한 정규식
     try:
         if html.status_code == 200:
             html = html.text
@@ -17,9 +18,10 @@ def craw_item(url):
                 category = items[index].find('nobr').text
                 write_date = items[index].find('nobr',{'class':'eng'}).text
                 link = items[index].find('td',{'valign':'middle'})
-                detail_url = link.find('a')['href'][12:]
-                detail_link = 'http://www.ppomppu.co.kr/zboard/view.php?id=' + detail_url
-                image_url = p.match(items[index].find('img')['src'][2:])
+                href_url = link.find('a')['href']
+                detail_url = re_src.findall(href_url)
+                detail_link = 'http://www.ppomppu.co.kr/zboard/view.php?' + detail_url[0]
+                image_url = re_img.match(items[index].find('img')['src'][2:])
                 image = image_url.group()
                 contents['content_' + str(index)] = {'title':title,
                                                   'category':category,
