@@ -7,7 +7,7 @@ class ModelTestCase(TestCase):
 
     def setUp(self):
         self.test_title = "Test title"
-        self.test_category = "Test Category"
+        self.test_category = "Category"
         self.test_date = "Test Date"
         self.test_link = "Test Link"
         self.test_instance = CD(title=self.test_title,

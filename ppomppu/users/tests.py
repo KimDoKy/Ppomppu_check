@@ -43,9 +43,7 @@ class UserCreateTestCase(TestCase):
                 'password': self.password}
         res = self.client.post('/rest-auth/login/', data)
         access_token = Token.objects.get()
-        print(access_token)
-        access_token = 'Bearer ' + str(access_token)}
+        access_token = 'Bearer ' + str(access_token)
         res = self.client.post('/rest-auth/logout/', HTTP_AUTHORIZATION=access_token)
-        print('result token: ', Token.objects.all())
         self.assertEqual(res.status_code, 200)
 

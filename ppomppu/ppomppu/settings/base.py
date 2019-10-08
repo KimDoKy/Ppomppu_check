@@ -29,6 +29,7 @@ SECRET_KEY = CONF_FILES['django']['secret_key']
 # Application definition
 
 INSTALLED_APPS = [
+    'django_jenkins',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -42,3 +42,9 @@ CELERY_TRANSPORT_OPTIONS = {'region':CONF_FILES['AWS']['region']}
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_TAST_SERIALIZER = 'json'
 
+# Jenkins Settings
+JENKINS_TASKS = (
+        'django_jenkins.tasks.run_pep8',
+        'django_jenkins.tasks.run_pyflakes',
+        'django_jenkins.tasks.run_flake8',
+        )
