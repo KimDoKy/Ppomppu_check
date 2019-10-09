@@ -10,3 +10,49 @@
 [PpomppuChecker](https://app.pycon.shop/)  
 [backend Github](https://github.com/KimDoKy/Ppomppu_check)  
 [frontend Github](https://github.com/KimDoKy/Ppomppu_check_front)
+
+
+## API Document
+
+```
+git clone https://github.com/KimDoKy/Ppomppu_check.git
+cd ppomppu
+python manage.py runserver --settings=ppomppu.settings.dev
+```
+`http://localhost:8000/v1/redoc/` 으로 접속
+
+![](./img/api_docu.png)
+
+
+--
+
+## Login
+
+![](./img/login.png)
+
+## Registration
+
+![](./img/registration.png)
+
+## Reset password
+
+![](./img/reset_pw.png)
+
+## Keyword
+
+![](./img/main.png)
+![](./img/add.png)
+
+## Email
+![](./img/email_1.png)
+![](./img/email_2.png)
+
+## User info
+![](./img/menu.png)
+![](./img/info.png)
+
+## Change password
+![](./img/change_pw.png)
+
+## Withdrawal
+![](./img/withdrawal.png)
