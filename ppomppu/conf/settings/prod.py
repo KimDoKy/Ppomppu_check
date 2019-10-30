@@ -3,7 +3,7 @@ from .base import *
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-WSGI_APPLICATION = 'ppomppu.wsgi.prod.application'
+WSGI_APPLICATION = 'conf.wsgi.prod.application'
 
 ALLOWED_HOSTS = [
     CONF_FILES['URL']['app'],

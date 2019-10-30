@@ -1,7 +1,7 @@
 import os
 from celery import Celery
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ppomppu.settings.prod')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'conf.settings.prod')
 
 app = Celery('ppomppu')
 

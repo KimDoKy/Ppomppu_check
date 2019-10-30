@@ -42,9 +42,6 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.kakao',
-    'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.naver',
     'django.contrib.sites',
     'corsheaders',
     'crawling_data',
@@ -82,7 +79,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'ppomppu.urls'
+ROOT_URLCONF = 'conf.urls'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
