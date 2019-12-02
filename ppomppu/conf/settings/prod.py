@@ -11,11 +11,11 @@ ALLOWED_HOSTS = [
 ]
 
 
-CORS_ORIGIN_WHITELIST = (
-    CONF_FILES['URL']['app'],
-    CONF_FILES['URL']['api']
-)
-
+#CORS_ORIGIN_WHITELIST = (
+#    CONF_FILES['URL']['app'],
+#    CONF_FILES['URL']['api']
+#)
+#
 
 DATABASES = {
     'default': {

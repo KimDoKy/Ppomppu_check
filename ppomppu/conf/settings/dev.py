@@ -8,11 +8,11 @@ WSGI_APPLICATION = 'conf.wsgi.dev.application'
 
 ALLOWED_HOSTS = ['*']
 
-CORS_ORIGIN_WHITELIST = (
-    'localhost:8080',
-    CONF_FILES['URL']['app'],
-    CONF_FILES['URL']['api']
-)
+#CORS_ORIGIN_WHITELIST = (
+#    'localhost:8001',
+#    CONF_FILES['URL']['app'],
+#    CONF_FILES['URL']['api']
+# )
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
