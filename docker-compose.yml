@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+    django:
+        image: ppomppu
+        ports:
+          - "4567:4567"
+          - "5432:5432"
+          - "6379:6379"
+          - "80:80"
+

@@ -5,7 +5,7 @@ import subprocess
 # Const
 MODE_BASE = 'base'
 MODE_DEBUG = 'debug'
-MODE_PRODUCTION = 'production'
+MODE_PRODUCTION = 'prod'
 IMAGE_BASE = 'ppomppu-base'
 IMAGE_DEBUG = 'ppomppu-debug'
 IMAGE_PRODUCTION = 'ppomppu'
@@ -49,9 +49,9 @@ elif args.mode == MODE_DEBUG:
     imagename = IMAGE_DEBUG
 elif args.mode == MODE_PRODUCTION:
     dockerfile = dockerfile_template.format(
-            from_image='ubuntu:18.04',
+            from_image=IMAGE_BASE,
             maintainer=MAINTAINER,
-            base=dockerfile_base,
+            base='',
             extra=dockerfile_extra
     )
     filename = DOCKERFILE_PRODUCTION
