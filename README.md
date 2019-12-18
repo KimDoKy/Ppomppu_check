@@ -7,7 +7,7 @@
 
 - 사용기술: Python, Django, DjangoRestFramework, Celery, AWS(EC2, ElastiCache(Redis), RDS(PostgreSQL)), JavaScript, Vue.js, firebase(front hosting), SSL(Cloud Flare)  
   
-[PpomppuChecker](https://app.pycon.shop/)  
+[PpomppuChecker](https://pp-checker.czarcie.shop/)  
 [backend Github](https://github.com/KimDoKy/Ppomppu_check)  
 [frontend Github](https://github.com/KimDoKy/Ppomppu_check_front)
 
@@ -26,33 +26,35 @@ python manage.py runserver --settings=ppomppu.settings.dev
 
 --
 
-## Login
+## Snapshot
+
+### Login
 
 ![](./img/login.png)
 
-## Registration
+### Registration
 
 ![](./img/registration.png)
 
-## Reset password
+### Reset password
 
 ![](./img/reset_pw.png)
 
-## Keyword
+### Keyword
 
 ![](./img/main.png)
 ![](./img/add.png)
 
-## Email
+### Email
 ![](./img/email_1.png)
 ![](./img/email_2.png)
 
-## User info
+### User info
 ![](./img/menu.png)
 ![](./img/info.png)
 
-## Change password
+### Change password
 ![](./img/change_pw.png)
 
-## Withdrawal
+### Withdrawal
 ![](./img/withdrawal.png)
