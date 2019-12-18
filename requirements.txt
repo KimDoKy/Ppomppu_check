@@ -53,7 +53,7 @@ python-crontab==2.3.6
 python-dateutil==2.8.0
 python3-openid==3.1.0
 pytz==2018.9
-PyYAML==3.13
+PyYAML==5.1
 redis==3.2.0
 requests==2.21.0
 requests-oauthlib==1.2.0
