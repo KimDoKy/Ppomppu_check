@@ -4,6 +4,10 @@
 
 ### secret
 .secret/
+.conf
+
+### docker
+Dockerfile.*
 
 ### Django ###
 *.log

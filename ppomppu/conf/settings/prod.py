@@ -3,7 +3,7 @@ from .base import *
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-WSGI_APPLICATION = 'ppomppu.wsgi.prod.application'
+WSGI_APPLICATION = 'conf.wsgi.prod.application'
 
 ALLOWED_HOSTS = [
     CONF_FILES['URL']['app'],
@@ -11,11 +11,11 @@ ALLOWED_HOSTS = [
 ]
 
 
-CORS_ORIGIN_WHITELIST = (
-    CONF_FILES['URL']['app'],
-    CONF_FILES['URL']['api']
-)
-
+#CORS_ORIGIN_WHITELIST = (
+#    CONF_FILES['URL']['app'],
+#    CONF_FILES['URL']['api']
+#)
+#
 
 DATABASES = {
     'default': {
