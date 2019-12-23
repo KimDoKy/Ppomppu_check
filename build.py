@@ -49,9 +49,9 @@ elif args.mode == MODE_DEBUG:
     imagename = IMAGE_DEBUG
 elif args.mode == MODE_PRODUCTION:
     dockerfile = dockerfile_template.format(
-            from_image=IMAGE_BASE,
+            from_image='ubuntu:18.04',
             maintainer=MAINTAINER,
-            base='',
+            base=dockerfile_base,
             extra=dockerfile_extra
     )
     filename = DOCKERFILE_PRODUCTION
