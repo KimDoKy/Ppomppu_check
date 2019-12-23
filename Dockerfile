@@ -26,7 +26,6 @@ COPY    .conf/nginx.conf /etc/nginx/nginx.conf
 COPY    .conf/supervisor-app.conf /etc/supervisor/conf.d/
 COPY    .conf/celery_ppomppu_beat.conf /etc/supervisor/conf.d/
 COPY    .conf/celery_ppomppu_worker.conf /etc/supervisor/conf.d/
-COPY    ./ppomppu/.secret /srv/app/ppomppu/.secret
 RUN     ln -s /etc/nginx/sites-available/app /etc/nginx/sites-enabled/app
 
 EXPOSE  4567 5432 6379 80
