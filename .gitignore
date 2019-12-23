@@ -4,7 +4,6 @@
 
 ### secret
 .secret/
-.conf
 
 ### docker
 Dockerfile.*
