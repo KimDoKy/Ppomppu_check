@@ -18,13 +18,3 @@ RUN         pip3 install uwsgi
 RUN         pip3 install --upgrade 'sentry-sdk==0.13.5'
 RUN         pip3 install raven --upgrade
 RUN         apt-get install -y redis-server
-
-COPY    .conf/uwsgi-app.ini /etc/uwsgi/sites/app.ini
-COPY    .conf/uwsgi.service /etc/systemd/system/uwsgi.service
-COPY    .conf/supervisor-app.conf /etc/supervisor/conf.d/
-COPY    .conf/celery_ppomppu_beat.conf /etc/supervisor/conf.d/
-COPY    .conf/celery_ppomppu_worker.conf /etc/supervisor/conf.d/
-
-EXPOSE  4567 5432 6379 80
-CMD     supervisord -n
-
