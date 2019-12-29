@@ -2,12 +2,20 @@ version: '3'
 
 services:
     django:
-        build:
-            context: .
-            dockerfile: .conf/Dockerfile
+        image: leafunk/ppomppu-checker
         ports:
           - "5432:5432"
           - "80:80"
         volumes:
           - ./ppomppu/.secret:/srv/app/ppomppu/.secret
           - ./ppomppu/conf:/srv/app/ppomppu/conf
+          - .conf/uwsgi-app.ini:/etc/uwsgi/sites/app.ini
+          - .conf/uwsgi.service:/etc/systemd/system/uwsgi.service
+          - .conf/conf.d:/etc/supervisor/conf.d
+          - .conf/nginx-app.conf:/etc/nginx/sites-available/app
+          - .conf/nginx.conf:/etc/nginx/nginx.conf
+        command: bash -c "
+            ln -s /etc/nginx/sites-available/app /etc/nginx/sites-enabled/app
+            && supervisord -n
+            && service nginx start
+            "
