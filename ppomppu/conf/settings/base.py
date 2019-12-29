@@ -192,7 +192,7 @@ import raven
 
 sentry_sdk.init(
     dsn=CONF_FILE['SENTRY']['dsn'],
-    integrations=[DjangoIntegration()]
+    integrations=[DjangoIntegration()])
 
 LOGGING = {
     'version': 1,

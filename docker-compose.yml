@@ -2,14 +2,12 @@ version: '3'
 
 services:
     django:
-        image: ppomppu
+        build:
+            context: .
+            dockerfile: .conf/Dockerfile
         ports:
-          - "6379:6379"
           - "5432:5432"
           - "80:80"
         volumes:
           - ./ppomppu/.secret:/srv/app/ppomppu/.secret
-          - .conf/nginx.conf:/etc/nginx/nginx.conf
-          - .conf/nginx-app.conf:/etc/nginx/sites-available/app
-        command:
-          - ln -s /etc/nginx/sites-available/app /etc/nginx/sites-enabled/app 
+          - ./ppomppu/conf:/srv/app/ppomppu/conf
