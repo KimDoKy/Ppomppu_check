@@ -13,7 +13,7 @@ def craw_item(url):
             soup = bs(html, 'html.parser')
             items = soup.find_all('tr', {'align':'center'})
             for index in range(len(items)):
-                if index == 0 or index == 1: continue # menu(0), 공지(1)은 제외
+                if index in (0, 1, 2): continue # menu(0), 공지(1,2)은 제외
                 title = items[index].find('font').text
                 category = items[index].find('nobr').text
                 write_date = items[index].find('nobr',{'class':'eng'}).text
