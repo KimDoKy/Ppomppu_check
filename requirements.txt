@@ -45,7 +45,7 @@ ptyprocess==0.6.0
 pyasn1==0.4.5
 pycparser==2.20
 pycrypto==2.6.1
-PyJWT==2.1.0
+PyJWT==2.4.0
 pyparsing==2.4.7
 python-crontab==2.5.1
 python-dateutil==2.8.0
